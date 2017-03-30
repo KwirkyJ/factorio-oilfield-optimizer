@@ -27,7 +27,7 @@ with open ("distance-lookup.lua", 'w') as file :
     for _x in range (ceil) :
         x = D (_x) * D_STEP
         file.write ("distances[{}] = {}\r\n".format (float (x), '{}'))
-        for _y in range (_x, ceil) :
+        for _y in range (_x+1) : # because range is ceiling-exclusive
             y = D (_y) * D_STEP
             r = (x**2 + y**2).sqrt () # cartesian distance
             file.write ("distances[{}][{}] = {}\r\n".format(float(x), 
