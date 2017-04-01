@@ -52,9 +52,9 @@ if even (substations), center is inter-plus-half, e.g., `-13.5`.
 
 Output is a table of entities with their position and rotation data. 
 
-Below is an sub-optimal example:
+Below is a simple, sub-optimal example:
 
-    grid = {
+    layout = {
         pump = {{x=5, y=-2, rot='v'}},
         beacon = {{x=2, y=-2}},
         medium-pole = {}, -- {x=4, y=0},
@@ -121,8 +121,33 @@ hint: there are only two groups
     BBB
 
 ### hand-crafted example:
-
-TODO: get from own save
+    BBBBBBBBB          
+    B*BB*BB*B          
+    BBBBBBBBB          
+    BBBm  BBBBBB       
+    B*B   B*BB*B       
+    BBBPPPBBBBBB     TT
+    BBBP@P   mBBB    TT
+    B*BPP>+<PPB*B      
+    BBBm  +P@PBBB      
+    BBBBBB+PPP         
+    B*BB*B++++>      < 
+    BBBBBB^PPvBBB      
+      mBBBP@P B*B      
+       B*BPPP BBB      
+       BBBBBBm         
+       BBBB*B^         
+       B*BBBB++BBB     
+       BBB PPP+B*B     
+       BBB P@P+BBB     
+       B*BmPP>+++BBB   
+       BBBBBBPPP+B*B   
+          B*BP@P+BBB   
+          BBBPP>+BBB   
+          BBB  m B*B   
+          B*BBBB BBB   
+          BBBB*B       
+             BBB       
 
 ## extra information and notes
 
