@@ -27,21 +27,28 @@ layout.new = new
 ---`if text` then insert tile characters at indices instead of entity
 ---return true if addition successful, else false (e.g., location clash)
 insert = function (L, typename, E, text)
-    local grid = L.grid
+    local grid, foot_tiles, tile, x, y, c
+    grid = L.grid
 --    if not entities[typename] then
 --        error ("typename ".. typename.. "not found in entities index", 2)
 --    end
-    local tile_iter = entities[typename].get_tiles
+    
+    foot_tiles = entities.get_tiles (typename, E)
+    tiles_len = #foot_tiles
     
     -- check for collisions; do not add and signal failure if clash
-    for x, y, _ in tile_iter (E) do
+    for i=1, tiles_len do
+        tile = foot_tiles[i]
+        x, y = tile.x, tile.y
         if grid[y] and grid[y][x] then 
             return false 
         end
     end
     
     -- no collision; insert
-    for x, y, c in tile_iter (E) do
+    for i=1, tiles_len do
+        tile = foot_tiles[i]
+        x, y, c = tile.x, tile.y, tile.repr
         if not grid[y] then
             grid[y] = {}
         end

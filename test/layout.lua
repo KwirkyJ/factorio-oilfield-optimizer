@@ -3,9 +3,150 @@ local assertive = require 'lib.assertive'
 
 local assertEq = assertive.assertEquals
 
-
-
 local expected, file, L, actual
+
+
+
+---- set up entities module with sample elements -----------------------------
+
+local entities = require 'entities'
+
+entities.init ("pumpjack",
+               {foot = {x=3, y=3},
+                requires_power = true,
+                is_source = true,
+                pipe_rule = 'first',
+                rotations = {
+                    ['^'] = {
+                        tiles = {{'P','P','^'},
+                                 {'P','@','P'},
+                                 {'P','P','P'}},
+                        pipe_attachments = {{x=1, y=-2}}
+                    },
+                    ['>'] = {
+                        tiles = {{'P','P','>'},
+                                 {'P','@','P'},
+                                 {'P','P','P'}},
+                        pipe_attachments = {{x=2, y=-1}}
+                    },
+                    ['v'] = {
+                        tiles = {{'P','P','P'},
+                                 {'P','@','P'},
+                                 {'v','P','P'}},
+                        pipe_attachments = {{x=-1, y=2}}
+                    },
+                    ['<'] = {
+                        tiles = {{'P','P','P'},
+                                 {'P','@','P'},
+                                 {'<','P','P'}},
+                        pipe_attachments = {{x=-2, y=1}}
+                    }}
+               })
+entities.init ('beacon', 
+               {requires_power = true,
+                bonus = {x=9, y=9},
+                foot = {x=3, y=3},
+                tiles = {{'B','B','B'},
+                         {'B','*','B'},
+                         {'B','B','B'}}
+               })
+entities.init ('big-pole', 
+               {foot = {x=2, y=2},
+                power = {area = {x=4,y=4},
+                reach = 30},
+                tiles = {{'T','T'},
+                         {'T','T'}}
+               })
+entities.init ('substation', 
+               {foot = {x=2, y=2},
+                power = {area = {x=14,y=14},
+                         reach = 14},
+                tiles = {{'#','#'},
+                         {'#','#'}}
+               })
+entities.init ('medium-pole', 
+               {foot = {x=1, y=1},
+                power = {area = {x=7,y=7},
+                         reach = 9},
+                tiles = {{'m'}}
+               })
+entities.init ('small-pole', 
+               {foot = {x=1, y=1},
+                power = {area = {x=7,y=7},
+                         reach = 9},
+                tiles = {{'m'}}
+               })
+entities.init ('pipe', 
+               {foot = {x=1, y=1},
+                pipe_rule = 'all',
+                pipe_attachments = {{x= 0, y=-1},
+                                    {x=-1, y= 0},
+                                    {x= 1, y= 0},
+                                    {x= 0, y= 1}},
+                tiles = {{'+'}}
+               })
+entities.init ('pipe-to-ground', 
+               {foot = {x=1, y=1},
+                pipe_rule = 'first',
+                rotations = {
+                    ['^'] = {
+                        tiles = {{'^'}},
+                        pipe_attachments = {
+                            {x=0, y=-1},
+                            {x=0, y=-2},
+                            {x=0, y=-3},
+                            {x=0, y=-4},
+                            {x=0, y=-5},
+                            {x=0, y=-6},
+                            {x=0, y=-7},
+                            {x=0, y=-8},
+                            {x=0, y=-9},
+                            {x=0, y=-10}}
+                    },
+                    ['>'] = {
+                        tiles = {{'>'}},
+                        pipe_attachments = {
+                            {x=1, y=0},
+                            {x=2, y=0},
+                            {x=3, y=0},
+                            {x=4, y=0},
+                            {x=5, y=0},
+                            {x=6, y=0},
+                            {x=7, y=0},
+                            {x=8, y=0},
+                            {x=9, y=0},
+                            {x=10, y=0}}
+                    },
+                    ['v'] = {
+                        tiles = {{'v'}},
+                        pipe_attachments = {
+                            {x=0, y=1},
+                            {x=0, y=2},
+                            {x=0, y=3},
+                            {x=0, y=4},
+                            {x=0, y=5},
+                            {x=0, y=6},
+                            {x=0, y=7},
+                            {x=0, y=8},
+                            {x=0, y=9},
+                            {x=0, y=10}}
+                    },
+                    ['<'] = {
+                        tiles = {{'<'}},
+                        pipe_attachments = {
+                            {x=-1, y=0},
+                            {x=-2, y=0},
+                            {x=-3, y=0},
+                            {x=-4, y=0},
+                            {x=-5, y=0},
+                            {x=-6, y=0},
+                            {x=-7, y=0},
+                            {x=-8, y=0},
+                            {x=-9, y=0},
+                            {x=-10, y=0}}
+                    }}
+               })
+
 
 -- ==== TEST NEW =============================================================
 
@@ -223,5 +364,5 @@ end
 assertEq (actual, expected)
 
 
-print ("==== OILPRINT TEST PASSED ====")
+print ("==== LAYOUT TEST PASSED ====")
 
