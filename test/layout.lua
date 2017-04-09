@@ -148,7 +148,7 @@ entities.init ('pipe-to-ground',
                })
 
 
--- ==== TEST NEW =============================================================
+-- ==== TEST CREATION ========================================================
 
 expected = {grid = {},
             entities = {},
@@ -160,8 +160,6 @@ assertEq (actual, expected)
 
 
 -- ==== TEST INSERT ==========================================================
-
---TODO: brittle, relying on details in (erstwhile) entities module
 
 local pump = {x=5, y=-1, rot='v'}
 expected = {grid = {[-2] = {[4] = pump, [5] = pump, [6] = pump},
@@ -362,6 +360,7 @@ for line in file:lines () do
 end
 
 assertEq (actual, expected)
+
 
 
 print ("==== LAYOUT TEST PASSED ====")

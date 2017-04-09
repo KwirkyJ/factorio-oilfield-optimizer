@@ -6,10 +6,14 @@ local entities = require 'entities'
 
 local layout = {}
 
-local insert, tofile
+local new, insert, tofile
+
+
+
+-- ==== layout.new () ========================================================
 
 ---create a Layout object
-local new = function ()
+new = function ()
     local t = {grid = {},
                entities = {},
                insert = insert, 
@@ -21,6 +25,8 @@ layout.new = new
 
 
 
+-- ==== layout.insert (Layout, typename, E, textgrid) ========================
+
 ---insert an entity `t` of type `typename` into grid object `G`
 ---can be called at module level `layout.insert (L, 'name', E)`
 ---or object-like `(Layout):insert ('name', E)`
@@ -29,9 +35,8 @@ layout.new = new
 insert = function (L, typename, E, text)
     local grid, foot_tiles, tile, x, y, c
     grid = L.grid
---    if not entities[typename] then
---        error ("typename ".. typename.. "not found in entities index", 2)
---    end
+    
+    -- TODO: error case of typename not recognized in entities
     
     foot_tiles = entities.get_tiles (typename, E)
     tiles_len = #foot_tiles
@@ -95,17 +100,9 @@ layout.insert = insert
 
 
 
----return a Layout object where entity references have been replaced 
----with tile characters
-local function get_text_grid (L) 
-    local textgrid = new ()
-    for typename, hashing in pairs (L.entities) do
-        for entity, _ in pairs (hashing) do
-            textgrid:insert (typename, entity, true)
-        end
-    end
-    return textgrid
-end
+-- ==== layout.tofile (Layout, filehandle) ===================================
+
+local get_text_grid
 
 ---print a formatted string representation of grid G to a file
 ---file argument must be handle, e.g. `io.open (path, 'w')`
@@ -124,6 +121,20 @@ tofile = function (L, file)
     file:flush ()
 end
 layout.tofile = tofile
+
+
+
+---return a Layout object where entity references have been replaced 
+---with tile characters
+get_text_grid = function (L) 
+    local textgrid = new ()
+    for typename, hashing in pairs (L.entities) do
+        for entity, _ in pairs (hashing) do
+            textgrid:insert (typename, entity, true)
+        end
+    end
+    return textgrid
+end
 
 
 
